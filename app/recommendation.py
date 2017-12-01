@@ -56,7 +56,7 @@ class Recommendation:
 
     # Display the recommendation for a user
     def make_recommendation(self, user):
-        closest_user = min(compute_all_similarities(self, user), key=lambda x: x[0])
+        closest_user = min(self.compute_all_similarities(user), key=lambda x: x[0])
 
         return "Vos recommandations : " + ", ".join([movie.title for movie in closest_user.good_ratings])
 
