@@ -80,7 +80,7 @@ class Recommendation:
     def compute_all_similarities(self, user):
         similarities = []
         for test_user in self.test_users:
-            similarities.append((get_similarity(user, test_user), test_user))
+            similarities.append((Recommendation.get_similarity(user, test_user), test_user))
         return similarities
 
     @staticmethod
