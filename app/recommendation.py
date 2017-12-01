@@ -56,9 +56,18 @@ class Recommendation:
 
     # Display the recommendation for a user
     def make_recommendation(self, user):
-        closest_user = min(self.compute_all_similarities(user), key=lambda x: x[0])
+        closest_users = sorted(self.compute_all_similarities(user), key=lambda x: x[0])[:5]
 
-        return "Vos recommandations : " + ", ".join([movie.title for movie in closest_user[1].good_ratings])
+        liked_movies = []
+        recommended_movies = []
+        for close_user in closest_users:
+            for movie in close_user[1].good_ratings:
+                if movie.title in liked_movies:
+                    recommended_movies.append(movie.title)
+                else:
+                    liked_movies.append(movie.title)
+
+        return "Vos recommandations : " + ", ".join(recommended_movies)
 
     # Compute the similarity between two users
     @staticmethod
@@ -80,7 +89,6 @@ class Recommendation:
     def compute_all_similarities(self, user):
         similarities = []
         for test_user in self.test_users.values():
-            print(test_user)
             similarities.append((Recommendation.get_similarity(user, test_user), test_user))
         return similarities
 
