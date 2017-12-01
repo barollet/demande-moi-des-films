@@ -58,7 +58,7 @@ class Recommendation:
     def make_recommendation(self, user):
         closest_user = min(self.compute_all_similarities(user), key=lambda x: x[0])
 
-        return "Vos recommandations : " + ", ".join([movie.title for movie in closest_user.good_ratings])
+        return "Vos recommandations : " + ", ".join([movie.title for movie in closest_user[1].good_ratings])
 
     # Compute the similarity between two users
     @staticmethod
@@ -74,12 +74,13 @@ class Recommendation:
                 similarity -= 1
             elif bad_rating in user_b.bad_ratings:
                 similarity += 1
-        return similarity * get_user_norm(user_b) / get_user_norm(user_a)
+        return similarity * Recommendation.get_user_norm(user_b) / Recommendation.get_user_norm(user_a)
 
     # Compute the similarity between a user and all the users in the data set
     def compute_all_similarities(self, user):
         similarities = []
-        for test_user in self.test_users:
+        for test_user in self.test_users.values():
+            print(test_user)
             similarities.append((Recommendation.get_similarity(user, test_user), test_user))
         return similarities
 
