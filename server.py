@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # coding: utf-8
 
 # Main file. It assigns the endpoints of the server to the logic.
